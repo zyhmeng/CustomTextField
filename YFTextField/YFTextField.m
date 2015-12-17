@@ -32,7 +32,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.textFieldWH = self.frame;
+        [self fontAndFineLineColorInit];
+        [self configAttributeInit];
     }
     return self;
 }
@@ -46,7 +47,7 @@
 {
     _fineLineColor = [UIColor lightGrayColor];
     _inputTextFontColor = [UIColor lightGrayColor];
-    _fineLineColor = [UIColor lightGrayColor];
+    _leftTextFontColor = [UIColor lightGrayColor];
 }
 //只有图片的leftView
 - (void)setupTextFieldWithLeftViewImage:(UIImage *)leftImage textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine

@@ -36,13 +36,18 @@
     [self.textField setPlaceholder:@"百度一下，你就知道"];
     
     //leftView只有文字  下面不带细线
-    [self.textField1 setupTextFieldWithLeftViewText:@"百度：" textViewLeftViewSpacing:10 andFineLine:NO];
+    
+    [self.textField1 setupTextFieldWithLeftViewText:@"百度：" textViewLeftViewSpacing:10 andFineLine:YES];
     
     //leftView带有图片
     [self.textField2 setupTextFieldWithLeftViewImage:[UIImage imageNamed:@"pic_user"] textViewLeftViewSpacing:10 andFineLine:YES];
     
-    //leftView带有图片文字
+    //没有 leftView
     [self.textField3 setupTextFieldWithFineLine:YES];
+    
+    YFTextField *yfTextField = [[YFTextField alloc]initWithFrame:CGRectMake(100, 20, 200, 30)];
+    [yfTextField setupTextFieldWithLeftViewText:@"百度" textViewLeftViewSpacing:10 andFineLine:YES];
+    [self.view addSubview:yfTextField];
     
 }
 

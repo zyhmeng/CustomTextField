@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define ScreenWidth  [UIScreen mainScreen].bounds.size.width
+
 @interface YFTextField : UITextField
 
 //DefaulColor lightGrayColor
@@ -19,7 +19,7 @@
 //DefaulttextFieldLeftViewImageWH 21
 @property (nonatomic, assign) CGFloat textFieldLeftViewImageWH;
 
-//DefaultLeftTextFont  14
+//DefaultLeftTextFont   14
 @property (nonatomic)  int  leftTextFont;
 
 //DefaultTextFieldHight 30
