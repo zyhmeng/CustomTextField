@@ -56,7 +56,9 @@
                                     </constraint>
                                     <constraint firstAttribute="height" constant="80" id="l1b-Dn-Lxv"/>
                                     <constraint firstAttribute="bottom" secondItem="L40-w2-G3p" secondAttribute="bottom" constant="4" id="s2Z-AL-kEa"/>
-                                    <constraint firstAttribute="trailing" secondItem="tTs-u5-cxM" secondAttribute="trailing" constant="90" id="v0r-sS-ZNC"/>
+                                    <constraint firstAttribute="trailing" secondItem="tTs-u5-cxM" secondAttribute="trailing" constant="90" id="v0r-sS-ZNC">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    </constraint>
                                     <constraint firstItem="tTs-u5-cxM" firstAttribute="top" secondItem="Gd1-TP-VmJ" secondAttribute="top" constant="8" id="ze0-GH-Aux"/>
                                 </constraints>
                                 <variation key="default">
@@ -66,14 +68,14 @@
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="l1b-Dn-Lxv"/>
-                                        <exclude reference="8ha-5X-87a"/>
-                                        <exclude reference="QbP-vD-bdh"/>
-                                        <exclude reference="v0r-sS-ZNC"/>
-                                        <exclude reference="ze0-GH-Aux"/>
                                         <exclude reference="ABw-f5-lZ4"/>
                                         <exclude reference="HQi-Xf-ydS"/>
                                         <exclude reference="ShL-H3-Ku4"/>
                                         <exclude reference="s2Z-AL-kEa"/>
+                                        <exclude reference="8ha-5X-87a"/>
+                                        <exclude reference="QbP-vD-bdh"/>
+                                        <exclude reference="v0r-sS-ZNC"/>
+                                        <exclude reference="ze0-GH-Aux"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -83,14 +85,14 @@
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="l1b-Dn-Lxv"/>
-                                        <include reference="8ha-5X-87a"/>
-                                        <exclude reference="QbP-vD-bdh"/>
-                                        <include reference="v0r-sS-ZNC"/>
-                                        <include reference="ze0-GH-Aux"/>
                                         <include reference="ABw-f5-lZ4"/>
                                         <include reference="HQi-Xf-ydS"/>
                                         <include reference="ShL-H3-Ku4"/>
                                         <include reference="s2Z-AL-kEa"/>
+                                        <include reference="8ha-5X-87a"/>
+                                        <exclude reference="QbP-vD-bdh"/>
+                                        <include reference="v0r-sS-ZNC"/>
+                                        <include reference="ze0-GH-Aux"/>
                                     </mask>
                                 </variation>
                             </view>
