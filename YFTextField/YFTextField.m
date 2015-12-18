@@ -15,7 +15,7 @@
 
 @implementation YFTextField
 
-
+#pragma mark - 调用一些系统的方法
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
@@ -49,7 +49,8 @@
     _inputTextFontColor = [UIColor lightGrayColor];
     _leftTextFontColor = [UIColor lightGrayColor];
 }
-//只有图片的leftView
+
+#pragma mark - 只有图片的leftView
 - (void)setupTextFieldWithLeftViewImage:(UIImage *)leftImage textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine
 {
     //设置inputTextFontColor
@@ -69,14 +70,9 @@
     [self setNeedsDisplay];
     [self layoutIfNeeded];
     _fineLine = fineLine;
-//    if (fineLine) {
-//        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.textFieldWH.size.height-1, self.textFieldWH.size.width, 1)];
-//        image.backgroundColor = self.fineLineColor;
-//        [self addSubview:image];
-//    }
 }
 
-//只有文字的leftView
+#pragma mark - 只有文字的leftView
 - (void)setupTextFieldWithLeftViewText:(NSString *)leftViewText textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine
 {
     //设置inputTextFontColor
@@ -101,27 +97,19 @@
     
     self.borderStyle = UITextBorderStyleNone;
     self.fineLine = fineLine;
-//    if (fineLine) {
-//        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-1, ScreenWidth, 1)];
-//        image.backgroundColor = self.fineLineColor;
-//        [self addSubview:image];
-//    }
 }
-//textfield  没有leftView
+
+#pragma mark - 没有leftView
 - (void)setupTextFieldWithFineLine:(BOOL)fineLine
 {
     //设置inputTextFontColor
     [self setTextColor:self.inputTextFontColor];
     self.fineLine = fineLine;
-//    if (fineLine) {
-//        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-1, ScreenWidth, 1)];
-//        image.backgroundColor = [UIColor lightGrayColor];
-//        [self addSubview:image];
-//    }
 }
 
 
-//根据字数设置leftViewText的尺寸
+
+#pragma mark - 根据字数设置leftViewText的尺寸
 - (CGFloat)setLeftViewTextWidth:(NSString *)leftViewText
 {
     //根据字数设置leftViewText的尺寸
@@ -142,6 +130,7 @@
     return rect.size.width;
 }
 
+
 - (void)drawRect:(CGRect)rect {
     if (self.fineLine) {
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -151,6 +140,7 @@
     
 }
 
+#pragma mark - 写一些属性的set方法
 - (void)setLeftTextFont:(int)leftTextFont
 {
     _leftTextFont = leftTextFont;
