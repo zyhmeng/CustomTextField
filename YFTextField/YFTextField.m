@@ -11,15 +11,118 @@
 @interface YFTextField()
 @property (nonatomic, assign) CGRect textFieldWH;
 @property (nonatomic) BOOL fineLine;
+
+
+@property (nonatomic, strong) UIColor *borderLineColor;
+@property (nonatomic) CGFloat borderLineWidth;
+@property (nonatomic) CGFloat borderCornerRadius;
+@property (nonatomic) CGFloat yfTextFieldHight;
+@property (nonatomic, strong) UIColor *placeholderColor;
+@property (nonatomic, strong) UIFont *placeholderFont;
+@property (nonatomic, strong) NSString *placeholderText;
 @end
 
 @implementation YFTextField
+
+#pragma mark - 枚举设置textField的类型
+- (void)setYFTextFieldBorderStyle:(YFTextFieldBorderStyle)style
+{
+    switch (style) {
+        case YFTextFieldBorderStyleNone:
+        {
+            self.borderStyle = UITextBorderStyleNone;
+        }
+            break;
+        case YFTextFieldBorderStyleUnderLine:
+        {
+            self.borderStyle = UITextBorderStyleNone;
+            _fineLine = YES;
+        }
+            break;
+        case YFTextFieldBorderStyleCustomRoundedRect:
+        {
+            [self.layer setBorderColor:self.borderLineColor.CGColor];
+            [self.layer setBorderWidth:self.borderLineWidth];
+            [self.layer setCornerRadius:self.borderCornerRadius];
+        }
+            break;
+        case YFTextFieldBorderStyleSystemRoundedRect:
+        {
+            self.borderStyle = UITextBorderStyleRoundedRect;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - 只有图片的leftView
+- (void)setYFTextFieldWithLeftViewImage:(UIImage *)leftImage spacing:(CGFloat)spacing imageWH:(CGSize)imageWH
+{
+    //计算leftView的尺寸
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, imageWH.width + spacing, imageWH.height)];
+    
+    //设置leftView
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, imageWH.width, imageWH.height)];
+    //设置图片
+    [leftButton setImage:leftImage forState:UIControlStateNormal];
+    [leftView addSubview:leftButton];
+    self.leftView = leftView;
+    self.leftViewMode = UITextFieldViewModeAlways;
+
+}
+
+#pragma mark - 只有文字的leftView
+- (void)setYFTextFieldWithLeftViewText:(NSString *)leftViewText spacing:(CGFloat)spacing textFont:(UIFont *)textFont andTextColor:(UIColor *)textColor
+{
+    // 根据字数得到view尺寸
+    CGRect textRect = [self computeTextRectWith:leftViewText andTextFont:textFont];
+    
+    //计算leftView的尺寸
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, textRect.size.width + spacing, self.textFieldHight)];
+    
+    //设置leftView
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, textRect.size.width, self.textFieldHight)];
+    
+    [leftButton setTitle:leftViewText forState:UIControlStateNormal];
+    [leftButton setTitleColor:textColor forState:UIControlStateNormal];
+    //设置leftText font
+    leftButton.titleLabel.font = textFont;
+    
+    [leftView addSubview:leftButton];
+    self.leftView = leftView;
+    self.leftViewMode = UITextFieldViewModeAlways;
+}
+
+#pragma mark - setup border line
+- (void)setYFTextFieldWithBorderLineColor:(UIColor *)color andWidth:(CGFloat)width
+{
+    _borderLineColor = color;
+    _borderLineWidth = width;
+}
+
+#pragma mark - setup border corner radius
+- (void)setYFTextFieldWithBorderCornerRadius:(CGFloat)radius
+{
+    _borderCornerRadius = radius;
+}
+
+#pragma mark - setup placeholder
+- (void)setYFTextFieldWithPlaceholderText:(NSString *)placeholderText textFont:(UIFont *)font andTextColor:(UIColor *)color
+{
+    _placeholderColor = color;
+    _placeholderFont = font;
+    _placeholderText = placeholderText;
+    [self setPlaceholder:placeholderText];
+}
 
 #pragma mark - 调用一些系统的方法
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
     if (self) {
+        
+        self.yfTextFieldHight = self.frame.size.height;
         [self fontAndFineLineColorInit];
         [self configAttributeInit];
         
@@ -32,6 +135,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.yfTextFieldHight = self.frame.size.height;
         [self fontAndFineLineColorInit];
         [self configAttributeInit];
     }
@@ -50,7 +154,7 @@
     _leftTextFontColor = [UIColor lightGrayColor];
 }
 
-#pragma mark - 只有图片的leftView
+
 - (void)setupTextFieldWithLeftViewImage:(UIImage *)leftImage textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine
 {
     //设置inputTextFontColor
@@ -69,10 +173,31 @@
     [self setNeedsLayout];
     [self setNeedsDisplay];
     [self layoutIfNeeded];
-    _fineLine = fineLine;
+//    _fineLine = fineLine;
 }
 
 #pragma mark - 只有文字的leftView
+- (void)setupTextFieldWithLeftViewText:(NSString *)leftViewText spacing:(CGFloat)spacing textFont:(UIFont *)textFont andTextColor:(UIColor *)textColor
+{
+    // 根据字数设置view尺寸
+    CGFloat leftViewTextWidth = [self setLeftViewTextWidth:leftViewText];
+    
+    //计算leftView的尺寸
+    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, leftViewTextWidth + spacing, self.textFieldHight)];
+    
+    //设置leftView
+    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, leftViewTextWidth, self.textFieldHight)];
+    
+    [leftButton setTitle:leftViewText forState:UIControlStateNormal];
+    [leftButton setTitleColor:textColor forState:UIControlStateNormal];
+    //设置leftText font
+    leftButton.titleLabel.font = textFont;
+    
+    [leftView addSubview:leftButton];
+    self.leftView = leftView;
+    self.leftViewMode = UITextFieldViewModeAlways;
+
+}
 - (void)setupTextFieldWithLeftViewText:(NSString *)leftViewText textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine
 {
     //设置inputTextFontColor
@@ -96,7 +221,7 @@
     self.leftViewMode = UITextFieldViewModeAlways;
     
     self.borderStyle = UITextBorderStyleNone;
-    self.fineLine = fineLine;
+//    self.fineLine = fineLine;
 }
 
 #pragma mark - 没有leftView
@@ -104,7 +229,7 @@
 {
     //设置inputTextFontColor
     [self setTextColor:self.inputTextFontColor];
-    self.fineLine = fineLine;
+//    self.fineLine = fineLine;
 }
 
 
@@ -129,13 +254,32 @@
                                              context:nil];
     return rect.size.width;
 }
-
+#pragma mark - 根据字体大小多少计算尺寸
+- (CGRect)computeTextRectWith:(NSString *)text andTextFont:(UIFont *)textFont
+{
+    //根据字数设置leftViewText的尺寸
+    CGFloat maxWidth = 200;
+    CGSize maxSize = CGSizeMake(maxWidth,CGFLOAT_MAX);
+    NSStringDrawingOptions opts = NSStringDrawingUsesLineFragmentOrigin |
+    NSStringDrawingUsesFontLeading;
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+    [style setLineBreakMode:NSLineBreakByCharWrapping];
+    
+    NSDictionary *attributes = @{ NSFontAttributeName : textFont, NSParagraphStyleAttributeName : style };
+    
+    CGRect rect = [text boundingRectWithSize:maxSize
+                                     options:opts
+                                  attributes:attributes
+                                     context:nil];
+    return rect;
+    
+}
 
 - (void)drawRect:(CGRect)rect {
     if (self.fineLine) {
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetFillColorWithColor(context, self.fineLineColor.CGColor);
-        CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), 1));
+        CGContextSetFillColorWithColor(context, self.borderLineColor.CGColor);
+        CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), self.borderLineWidth));
     }
     
 }
@@ -176,42 +320,18 @@
     _textFieldWH = textFieldWH;
 }
 
-
-/*
-
-//图片文字都有的leftView
-- (void)setupTextFieldWithLeftViewImage:(UIImage *)leftImage  leftViewText:(NSString *)leftViewText textViewLeftViewSpacing:(CGFloat)spacing andFineLine:(BOOL)fineLine
-{
-    
-    //根据字数设置view尺寸
-    CGFloat leftViewTextWidth = [self setLeftViewTextWidth:leftViewText];
-    //计算leftView的尺寸
-    UIView *leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, leftViewTextWidth + self.textFieldLeftViewImageWH + spacing, DefaultTextFieldHight)];
-    
-    //设置leftView
-    UIButton *leftButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, leftViewTextWidth + self.textFieldLeftViewImageWH + spacing, DefaultTextFieldHight)];
-    //设置图片
-    [leftButton setImage:leftImage forState:UIControlStateNormal];
-    //设置文字
-    [leftButton setTitle:leftViewText forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    
-    leftButton.titleLabel.font = [UIFont systemFontOfSize:DefaultLeftTextFont];
-    leftButton.titleLabel.textColor = [UIColor lightGrayColor];
-    
-    [leftView addSubview:leftButton];
-    self.leftView = leftView;
-    self.leftViewMode = UITextFieldViewModeAlways;
-    self.borderStyle = UITextBorderStyleNone;
-    if (fineLine) {
-        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(0, DefaultTextFieldHight-1, ScreenWidth, 1)];
-        image.backgroundColor = [UIColor lightGrayColor];
-        [self addSubview:image];
+#pragma mark - 居中placeholder的文字
+- (void)drawPlaceholderInRect:(CGRect)rect {
+    //draw place holder.
+    if (self.placeholderText != nil && self.placeholderFont != nil) {
+        CGRect placeholderTextRect = [self computeTextRectWith:self.placeholderText andTextFont:self.placeholderFont];
+        CGRect placeholderRect = CGRectMake(0, (self.frame.size.height-placeholderTextRect.size.height)*0.5, rect.size.width, rect.size.height);
+        
+        [[self placeholder] drawInRect:placeholderRect withAttributes:@{NSForegroundColorAttributeName:self.placeholderColor,NSFontAttributeName:self.placeholderFont}];
+        
     }
-    
 }
 
-*/
 
 
 @end

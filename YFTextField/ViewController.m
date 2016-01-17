@@ -30,7 +30,11 @@
     [self.textField setPlaceholder:@"百度一下，你就知道"];
     
     //leftView只有文字  下面不带细线
-    [self.textField1 setupTextFieldWithLeftViewText:@"百度：" textViewLeftViewSpacing:10 andFineLine:NO];
+    [self.textField1 setYFTextFieldBorderStyle:YFTextFieldBorderStyleUnderLine];
+    [self.textField1 setYFTextFieldWithBorderLineColor:[UIColor redColor] andWidth:5];
+    [self.textField1 setYFTextFieldWithLeftViewText:@"百度：" spacing:10 textFont:[UIFont systemFontOfSize:16] andTextColor:[UIColor redColor]];
+    [self.textField1 setYFTextFieldWithPlaceholderText:@"百度一下" textFont:[UIFont systemFontOfSize:12] andTextColor:[UIColor lightGrayColor]];
+    
     
     //leftView带有图片
     [self.textField2 setupTextFieldWithLeftViewImage:[UIImage imageNamed:@"pic_user"] textViewLeftViewSpacing:10 andFineLine:YES];

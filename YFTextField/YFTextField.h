@@ -14,6 +14,17 @@
  *
  *  Textfield的其他用到的属性都设置了默认值，如需要特殊更改可自行重写该属性的set方法
  */
+typedef enum {
+    
+    YFTextFieldBorderStyleNone,
+    YFTextFieldBorderStyleUnderLine,
+    YFTextFieldBorderStyleCustomRoundedRect,
+    YFTextFieldBorderStyleSystemRoundedRect
+    
+}YFTextFieldBorderStyle;
+
+
+
 #import <UIKit/UIKit.h>
 
 
@@ -64,5 +75,18 @@
  * @param fineLine      BOOL值决定是否需要下划线
  */
 - (void)setupTextFieldWithFineLine:(BOOL)fineLine;
+
+
+
+- (void)setYFTextFieldBorderStyle:(YFTextFieldBorderStyle)style;
+- (void)setYFTextFieldWithLeftViewImage:(UIImage *)leftImage spacing:(CGFloat)spacing imageWH:(CGSize)imageWH;
+
+- (void)setYFTextFieldWithLeftViewText:(NSString *)leftViewText spacing:(CGFloat)spacing textFont:(UIFont *)textFont andTextColor:(UIColor *)textColor;
+
+- (void)setYFTextFieldWithBorderLineColor:(UIColor *)color andWidth:(CGFloat)width;
+
+- (void)setYFTextFieldWithBorderCornerRadius:(CGFloat)radius;
+
+- (void)setYFTextFieldWithPlaceholderText:(NSString *)placeholderText textFont:(UIFont *)font andTextColor:(UIColor *)color;
 
 @end
