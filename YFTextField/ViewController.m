@@ -37,7 +37,7 @@
     
     [self.textField1 setYFTextFieldBorderStyle:YFTextFieldBorderStyleCustomRoundedRect];
     [self.textField1 setYFTextFieldWithBorderCornerRadius:10];
-    [self.textField1 setYFTextFieldWithBorderLineColor:[UIColor redColor] andWidth:5];
+    [self.textField1 setYFTextFieldWithBorderLineColor:[UIColor redColor] andWidth:2];
     [self.textField1 setYFTextFieldWithLeftViewImage:[UIImage imageNamed:@"pic_user"] spacing:10 imageWH:CGSizeMake(21, 21)];
     
     
