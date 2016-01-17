@@ -36,14 +36,13 @@
         case YFTextFieldBorderStyleUnderLine:
         {
             self.borderStyle = UITextBorderStyleNone;
+            
             _fineLine = YES;
         }
             break;
         case YFTextFieldBorderStyleCustomRoundedRect:
         {
-            [self.layer setBorderColor:self.borderLineColor.CGColor];
-            [self.layer setBorderWidth:self.borderLineWidth];
-            [self.layer setCornerRadius:self.borderCornerRadius];
+            
         }
             break;
         case YFTextFieldBorderStyleSystemRoundedRect:
@@ -105,6 +104,7 @@
 - (void)setYFTextFieldWithBorderCornerRadius:(CGFloat)radius
 {
     _borderCornerRadius = radius;
+    
 }
 
 #pragma mark - setup placeholder
@@ -276,10 +276,16 @@
 }
 
 - (void)drawRect:(CGRect)rect {
+    
     if (self.fineLine) {
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetFillColorWithColor(context, self.borderLineColor.CGColor);
-        CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - 1, CGRectGetWidth(self.frame), self.borderLineWidth));
+        CGContextFillRect(context, CGRectMake(0, CGRectGetHeight(self.frame) - self.borderLineWidth, CGRectGetWidth(self.frame), self.borderLineWidth));
+    }
+    if (self.borderCornerRadius) {
+        [self.layer setBorderColor:self.borderLineColor.CGColor];
+        [self.layer setBorderWidth:self.borderLineWidth];
+        [self.layer setCornerRadius:self.borderCornerRadius];
     }
     
 }
